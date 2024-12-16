@@ -5,15 +5,18 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Drink;
+use App\Http\Resources\Drink as DrinkResource;
+use App\Http\Controllers\api\ResponseController;
 
 
-class DrinkController extends Controller
+
+class DrinkController extends ResponseController
 {
     public function getDrinks(){
 
-        $drinks = Drink::all();
+        $drinks = Drink::with("type", "package")->get();
     
-    return $drinks;
+    return $this->sendResponse(DrinkResource::collection ($drinks), "betöltve");
 
     }
 
@@ -21,8 +24,7 @@ class DrinkController extends Controller
 
         $drink = Drink::where("drink", $request["drink"])->first();
     
-    return $drink;
-
+    return $this->sendResponse(new DrinkResource($drink), "Betöltve");
     }
 
     public function newDrink(Request $request){

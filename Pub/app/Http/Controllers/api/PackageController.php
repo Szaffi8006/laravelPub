@@ -5,8 +5,10 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Package;
+use App\Http\Resources\Package as PackageResource;
+use App\Http\Controllers\api\ResponseController;
 
-class PackageController extends Controller
+class PackageController extends ResponseController
 {
     public function getPackages(){
 
